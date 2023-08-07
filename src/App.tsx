@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Row } from "react-bootstrap";
+import { Loading } from "./Loading";
 
 function App() {
   return (
@@ -10,16 +11,30 @@ function App() {
 }
 
 const Start = () => {
-  return (
-    <div className="start-container text-center">
-      <Row>
-        <p className="start-title text-danger">SynWord</p>
+  const [showLoading, setShowLoading] = useState<boolean>(false);
+  const [startGame, setStartGame] = useState<boolean>(false);
 
-        <Button variant="danger" className="start-btn">
-          Start
-        </Button>
-      </Row>
-    </div>
+  const clickStart = () => {
+    setShowLoading(true);
+    setStartGame(true);
+  };
+
+  return (
+    <>
+      {showLoading ? (
+        <Loading />
+      ) : (
+        <div className="start-container text-center">
+          <Row>
+            <p className="start-title text-danger">SynWord</p>
+
+            <Button variant="danger" className="start-btn" onClick={clickStart}>
+              Start
+            </Button>
+          </Row>
+        </div>
+      )}
+    </>
   );
 };
 
