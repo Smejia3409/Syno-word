@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import { Loading } from "./Loading";
+import Game from "./Game";
 
 function App() {
   return (
@@ -26,11 +27,12 @@ const Start = () => {
       ) : (
         <div className="start-container text-center">
           <Row>
-            <p className="start-title text-danger">SynWord</p>
+            {/* <p className="start-title text-danger">SynWord</p>
 
             <Button variant="danger" className="start-btn" onClick={clickStart}>
               Start
-            </Button>
+            </Button> */}
+            <Game />
           </Row>
         </div>
       )}
