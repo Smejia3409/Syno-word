@@ -1,11 +1,24 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import { Button, Form, Row } from "react-bootstrap";
+import { GameContext } from "./GameContext";
 
 const Game = () => {
   const [wordInput, setWordInput] = useState<string>("");
+  const [wordIndex, setWordIndex] = useState<number>(0);
+
+  const gameContext = useContext(GameContext);
 
   const submitRes = () => {
+    if (wordInput !== gameContext.words[wordIndex]) {
+      gameContext.tries--;
+    }
+
+    if (gameContext.tries === 0) {
+      alert("Game over");
+    }
+
     console.log(wordInput);
+    console.log(gameContext);
   };
 
   return (

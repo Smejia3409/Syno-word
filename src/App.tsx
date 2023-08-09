@@ -2,12 +2,18 @@ import React, { useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import { Loading } from "./Loading";
 import Game from "./Game";
+import { GameContext } from "./GameContext";
+import { IGame } from "./interfaces";
 
 function App() {
+  const [gameValue, setGameValue] = useState<IGame>({ words: [], tries: 3 });
+
   return (
-    <div className="App ">
-      <Start />
-    </div>
+    <GameContext.Provider value={gameValue}>
+      <div className="App ">
+        <Start />
+      </div>
+    </GameContext.Provider>
   );
 }
 
