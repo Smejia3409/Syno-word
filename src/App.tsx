@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import { Loading } from "./Loading";
 import Game from "./Game";
 import { GameContext } from "./GameContext";
 import { IGame } from "./interfaces";
+import { getWords } from "./fetching";
 
 function App() {
   const [gameValue, setGameValue] = useState<IGame>({ words: [], tries: 3 });
+  const [words, setWords] = useState<string[]>([""]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      gameValue.words = await getWords();
+    };
+
+    fetchData();
+  }, [gameValue]);
 
   return (
     <GameContext.Provider value={gameValue}>
@@ -18,27 +28,28 @@ function App() {
 }
 
 const Start = () => {
+  const gameContext = useContext(GameContext);
+
   const [showLoading, setShowLoading] = useState<boolean>(false);
   const [startGame, setStartGame] = useState<boolean>(false);
+  const [clicked, setClicked] = useState<boolean>(false);
 
   const clickStart = () => {
-    setShowLoading(true);
     setStartGame(true);
   };
 
   return (
     <>
-      {showLoading ? (
-        <Loading />
+      {startGame ? (
+        <Game />
       ) : (
         <div className="start-container text-center">
           <Row>
-            {/* <p className="start-title text-danger">SynWord</p>
+            <p className="start-title text-danger">SynWord</p>
 
             <Button variant="danger" className="start-btn" onClick={clickStart}>
               Start
-            </Button> */}
-            <Game />
+            </Button>
           </Row>
         </div>
       )}
